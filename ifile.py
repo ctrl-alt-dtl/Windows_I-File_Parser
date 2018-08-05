@@ -24,11 +24,12 @@ with open(input, 'rb') as headerStruct:
     # Read 4 bytes at a time to do the BE to LE conversion
     dateTime1 = headerStruct.read(4)
     dateTime2 = headerStruct.read(4)
-    # Date/Time as BE hex time - unconverted
-    dtgNM = binascii.hexlify(dateTime1 + dateTime2).decode('ascii')
+    # Date/Time as BE hex time of file - unconverted
+    dtf = binascii.hexlify(dateTime1 + dateTime2).decode('ascii')
 
     # Win 64 Hex conversion code used from (https://github.com/Fetchered/time_decode/blob/master/time_decode.py)
-    converted_time = struct.unpack("<Q", binascii.unhexlify(dtgNM))[0]
+    converted_time = struct.unpack("<Q", binascii.unhexlify(dtf))[0]
+    # Windows Epoch Time of 01 Jan 1601
     dt_obj = dt(1601, 1, 1) + timedelta(microseconds=converted_time / 10)
     # STRFTIME (https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior)
     finalDTG = dt_obj.strftime('%a %d %B %Y %H:%M:%S %Z')
