@@ -5,7 +5,7 @@ from datetime import datetime as dt
 from datetime import timedelta
 import string
 
-
+# Name of the $I file (in this case I have the test case file)
 input =  "i-file"
 
 with open(input, 'rb') as headerStruct:
