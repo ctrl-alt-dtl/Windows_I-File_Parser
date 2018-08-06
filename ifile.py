@@ -32,7 +32,7 @@ with open(input, 'rb') as headerStruct:
     dt_obj = dt(1601, 1, 1) + timedelta(microseconds=converted_time / 10)
     # STRFTIME (https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior)
     finalDTG = dt_obj.strftime('%a %d %B %Y %H:%M:%S %Z')
-    print("Date/Time: " + finalDTG)
+    print("Date/Time (Windows): " + finalDTG)
 
     # File path of data without Unicode blocks
     filePath = headerStruct.read(520)
