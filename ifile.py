@@ -13,7 +13,7 @@ with open(input, 'rb') as headerStruct:
 
     print("File Header (not needed): " + binascii.hexlify(fileHeader).decode('ascii'))
 
-    # Read 4 bytes at a time to do the BE to LE conversion
+    # Read 4 bytes at a time to do the file size conversion
     fileSize1 = headerStruct.read(4)
     fileSize2 = headerStruct.read(4)
     result1 = unpack("<I", fileSize1)[0]
@@ -21,11 +21,10 @@ with open(input, 'rb') as headerStruct:
     resultSize = result2 + result1
     print("File Size: " + str(resultSize) + " bytes")
 
-    # Read 4 bytes at a time to do the BE to LE conversion
-    dateTime1 = headerStruct.read(4)
-    dateTime2 = headerStruct.read(4)
-    # Date/Time as BE hex time of file - unconverted
-    dtf = binascii.hexlify(dateTime1 + dateTime2).decode('ascii')
+    # Read 8 bytes at a time to do the to create the string for the time conversion
+    fileDateTime = headerStruct.read(8)
+    # Date/Time as Big Endian hex time of file - unconverted
+    dtf = binascii.hexlify(fileDateTime).decode('ascii')
 
     # Win 64 Hex conversion code used from (https://github.com/Fetchered/time_decode/blob/master/time_decode.py)
     converted_time = struct.unpack("<Q", binascii.unhexlify(dtf))[0]
